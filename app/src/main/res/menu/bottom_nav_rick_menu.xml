@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item android:id="@+id/characterFragment"
+        android:title="Characters"
+        android:orderInCategory="1"
+        />
+    <item
+        android:id="@+id/episodesFragment"
+        android:title="Episodes"
+        android:orderInCategory="2"
+        />
+    <item android:id="@+id/locationFragment"
+        android:title="Location"
+        android:orderInCategory="3"
+        />
+</menu>

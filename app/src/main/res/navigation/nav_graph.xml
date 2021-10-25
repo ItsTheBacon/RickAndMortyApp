@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/characterFragment">
+
+    <fragment
+        android:id="@+id/characterFragment"
+        android:name="com.example.rickandmortyarchitecture.presentation.ui.fragments.characters.CharacterFragment"
+        android:label="Character"
+        tools:layout="@layout/fragment_character" >
+        <action
+            android:id="@+id/action_characterFragment_to_dlalogFragment"
+            app:destination="@id/dlalogFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/episodesFragment"
+        android:name="com.example.rickandmortyarchitecture.presentation.ui.fragments.episodes.EpisodesFragment"
+        android:label="Episodes"
+        tools:layout="@layout/fragment_episodes" />
+    <fragment
+        android:id="@+id/locationFragment"
+        android:name="com.example.rickandmortyarchitecture.presentation.ui.fragments.location.LocationFragment"
+        android:label="Location"
+        tools:layout="@layout/fragment_location" />
+    <dialog
+        android:id="@+id/dlalogFragment"
+        tools:layout="@layout/fragment_dlalog"
+        android:name="com.example.rickandmortyarchitecture.presentation.ui.fragments.dialogs.DialogFragment"
+        android:label="DlalogFragment" >
+        <argument
+            android:name="image"
+            app:argType="string" />
+    </dialog>
+</navigation>
