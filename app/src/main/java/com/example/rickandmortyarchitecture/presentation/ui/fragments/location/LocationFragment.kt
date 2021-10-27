@@ -10,6 +10,7 @@ import com.example.rickandmortyarchitecture.common.extension.ScrollListener
 import com.example.rickandmortyarchitecture.databinding.FragmentLocationBinding
 import com.example.rickandmortyarchitecture.domain.models.LocationsModel
 import com.example.rickandmortyarchitecture.presentation.state.UIState
+import com.example.rickandmortyarchitecture.presentation.ui.activity.MainActivity
 import com.example.rickandmortyarchitecture.presentation.ui.adapters.LocationAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
@@ -27,6 +28,9 @@ class LocationFragment :
         binding.locationRv.ScrollListener(viewModel)
     }
 
+    override fun setupListener() {
+        bottomNavigationItemReselectListener()
+    }
     override fun setupObserve() {
         setUpLocations()
     }
@@ -47,5 +51,10 @@ class LocationFragment :
                 }
             }
         })
+    }
+    private fun bottomNavigationItemReselectListener() {
+        (requireActivity() as MainActivity).setOnBottomNavigationItemReselectListener {
+            binding.locationRv.smoothScrollToPosition(0)
+        }
     }
 }

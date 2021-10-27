@@ -10,6 +10,7 @@ import com.example.rickandmortyarchitecture.common.extension.ScrollListener
 import com.example.rickandmortyarchitecture.databinding.FragmentEpisodesBinding
 import com.example.rickandmortyarchitecture.domain.models.EpisodesModel
 import com.example.rickandmortyarchitecture.presentation.state.UIState
+import com.example.rickandmortyarchitecture.presentation.ui.activity.MainActivity
 import com.example.rickandmortyarchitecture.presentation.ui.adapters.EpisodesAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,6 +32,9 @@ class EpisodesFragment :
         setUpLocations()
     }
 
+    override fun setupListener() {
+        bottomNavigationItemReselectListener()
+    }
     private fun setUpLocations() {
         viewModel.episodesState.observe(viewLifecycleOwner, {
             binding.progressBarEverything.isVisible = it is UIState.Loading
@@ -47,5 +51,10 @@ class EpisodesFragment :
                 }
             }
         })
+    }
+    private fun bottomNavigationItemReselectListener() {
+        (requireActivity() as MainActivity).setOnBottomNavigationItemReselectListener {
+            binding.episodesRv.smoothScrollToPosition(0)
+        }
     }
 }

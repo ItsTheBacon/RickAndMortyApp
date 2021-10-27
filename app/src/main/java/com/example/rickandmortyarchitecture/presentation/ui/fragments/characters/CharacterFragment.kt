@@ -11,6 +11,7 @@ import com.example.rickandmortyarchitecture.common.extension.ScrollListener
 import com.example.rickandmortyarchitecture.databinding.FragmentCharacterBinding
 import com.example.rickandmortyarchitecture.domain.models.CharactersModel
 import com.example.rickandmortyarchitecture.presentation.state.UIState
+import com.example.rickandmortyarchitecture.presentation.ui.activity.MainActivity
 import com.example.rickandmortyarchitecture.presentation.ui.adapters.CharactersAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,6 +28,9 @@ class CharacterFragment :
 
     }
 
+    override fun setupListener() {
+        bottomNavigationItemReselectListener()
+    }
     override fun setupObserve() {
         setUpCharacters()
     }
@@ -53,5 +57,10 @@ class CharacterFragment :
         findNavController().navigate(
             CharacterFragmentDirections.actionCharacterFragmentToDlalogFragment(photo)
         )
+    }
+    private fun bottomNavigationItemReselectListener() {
+        (requireActivity() as MainActivity).setOnBottomNavigationItemReselectListener {
+            binding.characterRecycler.smoothScrollToPosition(0)
+        }
     }
 }
