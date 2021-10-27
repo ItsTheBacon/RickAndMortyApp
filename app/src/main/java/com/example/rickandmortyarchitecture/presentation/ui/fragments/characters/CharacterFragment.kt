@@ -7,7 +7,9 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.rickandmortyarchitecture.R
 import com.example.rickandmortyarchitecture.base.BaseFragment
+import com.example.rickandmortyarchitecture.common.extension.ScrollListener
 import com.example.rickandmortyarchitecture.databinding.FragmentCharacterBinding
+import com.example.rickandmortyarchitecture.domain.models.CharactersModel
 import com.example.rickandmortyarchitecture.presentation.state.UIState
 import com.example.rickandmortyarchitecture.presentation.ui.adapters.CharactersAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,6 +23,8 @@ class CharacterFragment :
 
     override fun initialize() {
         binding.characterRecycler.adapter = adapter
+        binding.characterRecycler.ScrollListener(viewModel)
+
     }
 
     override fun setupObserve() {
@@ -37,7 +41,9 @@ class CharacterFragment :
                 is UIState.Loading -> {
                 }
                 is UIState.Success -> {
-                    adapter.submitList(it.data)
+                    val list = ArrayList<CharactersModel>(adapter.currentList)
+                    list.addAll(it.data)
+                    adapter.submitList(list)
                 }
             }
         })

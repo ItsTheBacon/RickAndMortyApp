@@ -5,5 +5,5 @@ import com.example.rickandmortyarchitecture.domain.models.CharactersModel
 import kotlinx.coroutines.flow.Flow
 
 interface CharacterRepository {
-    fun fetchCharacters(): Flow<Resource<List<CharactersModel>>>
+    fun fetchCharacters(page: Int): Flow<Resource<List<CharactersModel>>>
 }

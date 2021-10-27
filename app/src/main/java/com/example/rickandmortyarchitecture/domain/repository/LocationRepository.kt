@@ -5,6 +5,6 @@ import com.example.rickandmortyarchitecture.domain.models.LocationsModel
 import kotlinx.coroutines.flow.Flow
 
 interface LocationRepository {
-    fun fetchLocation(): Flow<Resource<List<LocationsModel>>>
+    fun fetchLocation(page: Int): Flow<Resource<List<LocationsModel>>>
 
 }

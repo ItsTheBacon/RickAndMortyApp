@@ -12,6 +12,6 @@ data class RickAndMortyResponseDto<T>(
 
 )
 
-fun <T> RickAndMortyResponseDto<T>.toResponse() = RickAndMortyResponse<T>(
+fun <T> RickAndMortyResponseDto<T>.toResponse() = RickAndMortyResponse(
     info.toInfo(), results
 )

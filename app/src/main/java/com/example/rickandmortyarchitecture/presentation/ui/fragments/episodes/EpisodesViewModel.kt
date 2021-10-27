@@ -2,6 +2,7 @@ package com.example.rickandmortyarchitecture.presentation.ui.fragments.episodes
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.rickandmortyarchitecture.base.BaseFetch
 import com.example.rickandmortyarchitecture.base.BaseViewModel
 import com.example.rickandmortyarchitecture.domain.models.EpisodesModel
 import com.example.rickandmortyarchitecture.domain.usecase.EpisodesUseCase
@@ -10,19 +11,23 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class EpisodesViewModel @Inject constructor(private val useCase: EpisodesUseCase) :
-    BaseViewModel() {
+class EpisodesViewModel @Inject constructor(
+    private val useCase: EpisodesUseCase,
+) : BaseViewModel(), BaseFetch {
 
     private val _episodesState = MutableLiveData<UIState<List<EpisodesModel>>>()
     val episodesState: LiveData<UIState<List<EpisodesModel>>> = _episodesState
+    override var page: Int = 1
 
     init {
-        fetchEpisodes()
+        fetchRick(1)
     }
 
-    private fun fetchEpisodes() {
+    override fun fetchRick(page: Int) {
         subscribeTo(_episodesState) {
-            useCase()
+            useCase(page)
         }
     }
+
+
 }

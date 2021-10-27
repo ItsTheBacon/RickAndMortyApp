@@ -5,6 +5,6 @@ import com.example.rickandmortyarchitecture.domain.models.EpisodesModel
 import kotlinx.coroutines.flow.Flow
 
 interface EpisodesRepository {
-    fun fetchEpisodes(): Flow<Resource<List<EpisodesModel>>>
+    fun fetchEpisodes(page: Int): Flow<Resource<List<EpisodesModel>>>
 
 }

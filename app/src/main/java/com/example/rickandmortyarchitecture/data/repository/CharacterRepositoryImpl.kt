@@ -10,8 +10,8 @@ import javax.inject.Inject
 class CharacterRepositoryImpl @Inject constructor(private val service: CharacterApiService) :
     BaseRepository(),
     CharacterRepository {
-    override fun fetchCharacters() = doRequest {
-        service.fetchCharacters().toResponse().results.map {
+    override fun fetchCharacters(page: Int) = doRequest {
+        service.fetchCharacters(page).toResponse().results.map {
             it.toCharacter()
         }
     }

@@ -9,8 +9,8 @@ import javax.inject.Inject
 
 class LocationRepositoryImpl @Inject constructor(private val service: LocationApiService) :
     BaseRepository(), LocationRepository {
-    override fun fetchLocation() = doRequest {
-        service.fetchLocations().toResponse().results.map {
+    override fun fetchLocation(page: Int) = doRequest {
+        service.fetchLocations(page).toResponse().results.map {
             it.toLocation()
         }
     }
