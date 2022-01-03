@@ -1,8 +1,9 @@
 #RickAndMortyArchitecture
-Clean Architecture Example
+#CleanArchitecture 
+Example
 Retrofit 2 , Okhttp,
 Clean Architecture,
-MVVM,
+#MVVM,
 Kotlin Coroutines
 fetch Api 
 https://rickandmortyapi.com/
