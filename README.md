@@ -1,7 +1,8 @@
 #RickAndMortyArchitecture
-
-Retrofit 2 , Okhttp
-основы Clean Architecture  
-Kotlin Coroutines ,
-работа с Api 
+Clean Architecture Example
+Retrofit 2 , Okhttp,
+Clean Architecture,
+MVVM,
+Kotlin Coroutines
+fetch Api 
 https://rickandmortyapi.com/
