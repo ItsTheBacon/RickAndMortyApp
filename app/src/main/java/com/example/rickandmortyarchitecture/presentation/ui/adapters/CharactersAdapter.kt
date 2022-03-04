@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bacon.domain.models.CharactersModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -13,15 +14,14 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.example.rickandmortyarchitecture.base.BaseDiffUtilCallback
 import com.example.rickandmortyarchitecture.databinding.ItemCharactersRickBinding
-import com.example.rickandmortyarchitecture.domain.models.CharactersModel
 
 class CharactersAdapter(
-    val onItemLongClick: (photo: String) -> Unit
+    val onItemLongClick: (photo: String) -> Unit,
 ) : ListAdapter<CharactersModel, CharactersAdapter.ViewHolder>(
     BaseDiffUtilCallback()
 ) {
     inner class ViewHolder(
-        private val binding: ItemCharactersRickBinding
+        private val binding: ItemCharactersRickBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun onBind(data: CharactersModel) {
@@ -35,7 +35,7 @@ class CharactersAdapter(
                             model: Any?,
                             target: Target<Drawable?>?,
                             dataSource: com.bumptech.glide.load.DataSource?,
-                            isFirstResource: Boolean
+                            isFirstResource: Boolean,
                         ): Boolean {
                             itemProgressBar.visibility = View.GONE
                             return false
@@ -45,7 +45,7 @@ class CharactersAdapter(
                             e: GlideException?,
                             model: Any?,
                             target: Target<Drawable?>?,
-                            isFirstResource: Boolean
+                            isFirstResource: Boolean,
                         ): Boolean {
                             itemProgressBar.visibility = View.GONE
                             return false

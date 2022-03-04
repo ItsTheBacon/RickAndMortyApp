@@ -1,9 +1,9 @@
 package com.example.rickandmortyarchitecture.di
 
-import com.example.rickandmortyarchitecture.data.network.RetrofitClient
-import com.example.rickandmortyarchitecture.data.network.apiservices.CharacterApiService
-import com.example.rickandmortyarchitecture.data.network.apiservices.EpisodesApiService
-import com.example.rickandmortyarchitecture.data.network.apiservices.LocationApiService
+import com.bacon.data.remote.RetrofitClient
+import com.bacon.data.remote.apiservices.CharacterApiService
+import com.bacon.data.remote.apiservices.EpisodesApiService
+import com.bacon.data.remote.apiservices.LocationApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

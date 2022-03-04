@@ -1,14 +1,14 @@
 package com.example.rickandmortyarchitecture.di
 
-import com.example.rickandmortyarchitecture.data.network.apiservices.CharacterApiService
-import com.example.rickandmortyarchitecture.data.network.apiservices.EpisodesApiService
-import com.example.rickandmortyarchitecture.data.network.apiservices.LocationApiService
-import com.example.rickandmortyarchitecture.data.repository.CharacterRepositoryImpl
-import com.example.rickandmortyarchitecture.data.repository.EpisodesRepositoryImpl
-import com.example.rickandmortyarchitecture.data.repository.LocationRepositoryImpl
-import com.example.rickandmortyarchitecture.domain.repository.CharacterRepository
-import com.example.rickandmortyarchitecture.domain.repository.EpisodesRepository
-import com.example.rickandmortyarchitecture.domain.repository.LocationRepository
+import com.bacon.data.remote.apiservices.CharacterApiService
+import com.bacon.data.remote.apiservices.EpisodesApiService
+import com.bacon.data.remote.apiservices.LocationApiService
+import com.bacon.data.repository.CharacterRepositoryImpl
+import com.bacon.data.repository.EpisodesRepositoryImpl
+import com.bacon.data.repository.LocationRepositoryImpl
+import com.bacon.domain.repository.CharacterRepository
+import com.bacon.domain.repository.EpisodesRepository
+import com.bacon.domain.repository.LocationRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

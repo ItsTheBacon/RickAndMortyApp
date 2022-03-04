@@ -5,11 +5,11 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.bacon.domain.models.CharactersModel
 import com.example.rickandmortyarchitecture.R
 import com.example.rickandmortyarchitecture.base.BaseFragment
-import com.example.rickandmortyarchitecture.common.extension.ScrollListener
 import com.example.rickandmortyarchitecture.databinding.FragmentCharacterBinding
-import com.example.rickandmortyarchitecture.domain.models.CharactersModel
+import com.example.rickandmortyarchitecture.extensions.ScrollListener
 import com.example.rickandmortyarchitecture.presentation.state.UIState
 import com.example.rickandmortyarchitecture.presentation.ui.activity.MainActivity
 import com.example.rickandmortyarchitecture.presentation.ui.adapters.CharactersAdapter
@@ -31,12 +31,13 @@ class CharacterFragment :
     override fun setupListener() {
         bottomNavigationItemReselectListener()
     }
+
     override fun setupObserve() {
         setUpCharacters()
     }
 
     private fun setUpCharacters() {
-        viewModel.charactersState.observe(viewLifecycleOwner, {
+        viewModel.charactersState.observe(viewLifecycleOwner) {
             binding.progressBarEverything.isVisible = it is UIState.Loading
             when (it) {
                 is UIState.Error -> {
@@ -50,7 +51,7 @@ class CharacterFragment :
                     adapter.submitList(list)
                 }
             }
-        })
+        }
     }
 
     private fun onItemLongClick(photo: String) {
@@ -58,6 +59,7 @@ class CharacterFragment :
             CharacterFragmentDirections.actionCharacterFragmentToDlalogFragment(photo)
         )
     }
+
     private fun bottomNavigationItemReselectListener() {
         (requireActivity() as MainActivity).setOnBottomNavigationItemReselectListener {
             binding.characterRecycler.smoothScrollToPosition(0)

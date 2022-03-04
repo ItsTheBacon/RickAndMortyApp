@@ -4,11 +4,11 @@ import android.util.Log
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.bacon.domain.models.EpisodesModel
 import com.example.rickandmortyarchitecture.R
 import com.example.rickandmortyarchitecture.base.BaseFragment
-import com.example.rickandmortyarchitecture.common.extension.ScrollListener
 import com.example.rickandmortyarchitecture.databinding.FragmentEpisodesBinding
-import com.example.rickandmortyarchitecture.domain.models.EpisodesModel
+import com.example.rickandmortyarchitecture.extensions.ScrollListener
 import com.example.rickandmortyarchitecture.presentation.state.UIState
 import com.example.rickandmortyarchitecture.presentation.ui.activity.MainActivity
 import com.example.rickandmortyarchitecture.presentation.ui.adapters.EpisodesAdapter
@@ -35,8 +35,9 @@ class EpisodesFragment :
     override fun setupListener() {
         bottomNavigationItemReselectListener()
     }
+
     private fun setUpLocations() {
-        viewModel.episodesState.observe(viewLifecycleOwner, {
+        viewModel.episodesState.observe(viewLifecycleOwner) {
             binding.progressBarEverything.isVisible = it is UIState.Loading
             when (it) {
                 is UIState.Error -> {
@@ -50,8 +51,9 @@ class EpisodesFragment :
                     adapter.submitList(epList)
                 }
             }
-        })
+        }
     }
+
     private fun bottomNavigationItemReselectListener() {
         (requireActivity() as MainActivity).setOnBottomNavigationItemReselectListener {
             binding.episodesRv.smoothScrollToPosition(0)

@@ -1,4 +1,4 @@
-package com.example.rickandmortyarchitecture.common.extension
+package com.example.rickandmortyarchitecture.extensions
 
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rickandmortyarchitecture.base.BaseFetch

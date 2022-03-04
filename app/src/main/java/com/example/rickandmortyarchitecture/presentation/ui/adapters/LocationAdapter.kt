@@ -4,15 +4,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bacon.domain.models.LocationsModel
 import com.example.rickandmortyarchitecture.base.BaseDiffUtilCallback
 import com.example.rickandmortyarchitecture.databinding.ItemLocationRickBinding
-import com.example.rickandmortyarchitecture.domain.models.LocationsModel
 
 class LocationAdapter : ListAdapter<LocationsModel, LocationAdapter.ViewHolder>(
     BaseDiffUtilCallback()
 ) {
     inner class ViewHolder(
-        private val binding: ItemLocationRickBinding
+        private val binding: ItemLocationRickBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun onBind(data: LocationsModel) {
