@@ -62,9 +62,10 @@ dependencies {
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
 
     // ViewBinding Property delegate
-    val view_binding_property_delegate = "1.5.3"
-    implementation("com.github.kirich1409:viewbindingpropertydelegate-noreflection:$view_binding_property_delegate")
 
+    // ViewBindingPropertyDelegate
+    // | kirich1409 | To use only without reflection variants of viewBinding
+    implementation("com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.3")
     // ViewModel
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.1")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
@@ -95,4 +96,7 @@ dependencies {
     // Hilt
     implementation("com.google.dagger:hilt-android:2.40.5")
     kapt("com.google.dagger:hilt-android-compiler:2.40")
+    //Shimmer Layout
+    implementation("com.facebook.shimmer:shimmer:0.5.0")
+
 }
