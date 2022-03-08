@@ -9,10 +9,13 @@
         android:id="@+id/characterFragment"
         android:name="com.example.rickandmortyarchitecture.presentation.ui.fragments.characters.CharacterFragment"
         android:label="Character"
-        tools:layout="@layout/fragment_character" >
+        tools:layout="@layout/fragment_character">
         <action
             android:id="@+id/action_characterFragment_to_dlalogFragment"
             app:destination="@id/dlalogFragment" />
+        <action
+            android:id="@+id/action_characterFragment_to_charactersDetailFragment"
+            app:destination="@id/charactersDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/episodesFragment"
@@ -26,11 +29,21 @@
         tools:layout="@layout/fragment_location" />
     <dialog
         android:id="@+id/dlalogFragment"
-        tools:layout="@layout/fragment_dlalog"
         android:name="com.example.rickandmortyarchitecture.presentation.ui.fragments.dialogs.DialogFragment"
-        android:label="DlalogFragment" >
+        android:label="DlalogFragment"
+        tools:layout="@layout/fragment_dlalog">
         <argument
             android:name="image"
             app:argType="string" />
+    </dialog>
+    <dialog
+        android:id="@+id/charactersDetailFragment"
+        android:name="com.example.rickandmortyarchitecture.presentation.ui.fragments.characters.detail.CharactersDetailFragment"
+        android:label="fragment_characters_detail"
+        tools:layout="@layout/fragment_characters_detail">
+        <argument
+            android:name="id"
+            android:defaultValue="-1"
+            app:argType="integer" />
     </dialog>
 </navigation>
