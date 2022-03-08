@@ -2,10 +2,11 @@ package com.example.rickandmortyarchitecture.presentation.ui.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.setupWithNavController
+import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.example.rickandmortyarchitecture.R
 import com.example.rickandmortyarchitecture.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -13,7 +14,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var bottomNavigationItemReselectListener: OnBottomNavigationItemReselect
+    private lateinit var navController: NavController
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,35 +26,21 @@ class MainActivity : AppCompatActivity() {
 
     private fun setUpNavigation() {
         val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
-        val navController = navHostFragment.navController
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
 
-        val appBarConfiguration = AppBarConfiguration.Builder(
+        appBarConfiguration = AppBarConfiguration.Builder(
             R.id.characterFragment,
             R.id.episodesFragment,
             R.id.locationFragment
         ).build()
-        with(binding.bottomNavRick) {
-            setupWithNavController(navController)
-            setOnNavigationItemReselectedListener {
-                when (it.itemId) {
-                    R.id.characterFragment,
-                    R.id.episodesFragment,
-                    R.id.locationFragment -> {
-                        bottomNavigationItemReselectListener.onItemReselect()
-                    }
-                }
-            }
-        }
-        NavigationUI.setupWithNavController(binding.toolbarMain, navController, appBarConfiguration)
-
+        setupWithNavController(binding.bottomNavRick, navController)
+        setupWithNavController(binding.toolbarMain, navController, appBarConfiguration)
     }
 
-    fun interface OnBottomNavigationItemReselect {
-        fun onItemReselect()
+    override fun onSupportNavigateUp(): Boolean {
+        return (NavigationUI.navigateUp(navController, appBarConfiguration)
+                || super.onSupportNavigateUp())
     }
 
-    fun setOnBottomNavigationItemReselectListener(bottomNavigationItemReselectListener: OnBottomNavigationItemReselect) {
-        this.bottomNavigationItemReselectListener = bottomNavigationItemReselectListener
-    }
 }
