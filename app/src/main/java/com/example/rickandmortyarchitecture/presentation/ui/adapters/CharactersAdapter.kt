@@ -1,70 +1,56 @@
 package com.example.rickandmortyarchitecture.presentation.ui.adapters
 
-import android.graphics.drawable.Drawable
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bacon.domain.models.CharactersModel
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
+import com.example.rickandmortyarchitecture.R
 import com.example.rickandmortyarchitecture.base.BaseDiffUtilCallback
 import com.example.rickandmortyarchitecture.databinding.ItemCharactersRickBinding
+import com.example.rickandmortyarchitecture.extensions.capitalized
+import com.example.rickandmortyarchitecture.extensions.load
+import com.example.rickandmortyarchitecture.presentation.models.CharactersUI
 
 class CharactersAdapter(
     val onItemLongClick: (photo: String) -> Unit,
-) : ListAdapter<CharactersModel, CharactersAdapter.ViewHolder>(
+    val onItemClickListener: (id: Int) -> Unit,
+) : ListAdapter<CharactersUI, CharactersAdapter.ViewHolder>(
     BaseDiffUtilCallback()
 ) {
     inner class ViewHolder(
         private val binding: ItemCharactersRickBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun onBind(data: CharactersModel) {
-            with(binding) {
-                Glide.with(imgCharacter)
-                    .load(data.image)
-                    .listener(object : RequestListener<Drawable?> {
-
-                        override fun onResourceReady(
-                            resource: Drawable?,
-                            model: Any?,
-                            target: Target<Drawable?>?,
-                            dataSource: com.bumptech.glide.load.DataSource?,
-                            isFirstResource: Boolean,
-                        ): Boolean {
-                            itemProgressBar.visibility = View.GONE
-                            return false
-                        }
-
-                        override fun onLoadFailed(
-                            e: GlideException?,
-                            model: Any?,
-                            target: Target<Drawable?>?,
-                            isFirstResource: Boolean,
-                        ): Boolean {
-                            itemProgressBar.visibility = View.GONE
-                            return false
-                        }
-                    })
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .into(imgCharacter)
-                txtName.text = data.name
-                genres.text = data.status
-                imgCharacter.setOnLongClickListener {
-                    getItem(adapterPosition)?.apply { onItemLongClick(image!!) }
-                    false
+        init {
+            itemView.setOnClickListener {
+                getItem(absoluteAdapterPosition)?.let {
+                    onItemClickListener(it.id)
                 }
+            }
+        }
+
+        @SuppressLint("SetTextI18n")
+        fun onBind(data: CharactersUI) = with(binding) {
+            imageItemCharacter.load(data.image)
+            nameCharacter.text = data.name
+            when (data.status) {
+                "Alive" -> icStatusCharacter.setImageResource(R.drawable.character_status_alive)
+                "Dead" -> icStatusCharacter.setImageResource(R.drawable.character_status_dead)
+                "unknown" -> icStatusCharacter.setImageResource(R.drawable.character_status_unknown)
+            }
+            speciesCharacter.text = "${data.status.capitalized()} - ${data.species}"
+
+            lastKnowLocation.text = data.location.name.capitalized()
+            imageItemCharacter.setOnLongClickListener {
+                getItem(absoluteAdapterPosition)?.apply { onItemLongClick(image!!) }
+                false
             }
         }
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.onBind(getItem(position))
+        getItem(position)?.let { holder.onBind(it) }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
