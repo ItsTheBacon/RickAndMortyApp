@@ -1,21 +1,22 @@
 package com.example.rickandmortyarchitecture.presentation.ui.fragments.location
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.bacon.domain.models.LocationsModel
 import com.bacon.domain.usecase.LocationUseCase
 import com.example.rickandmortyarchitecture.base.BaseFetch
 import com.example.rickandmortyarchitecture.base.BaseViewModel
+import com.example.rickandmortyarchitecture.presentation.models.LocationsUI
+import com.example.rickandmortyarchitecture.presentation.models.toUI
 import com.example.rickandmortyarchitecture.presentation.state.UIState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 @HiltViewModel
 class LocationViewModel @Inject constructor(
     private val useCase: LocationUseCase,
 ) : BaseViewModel(), BaseFetch {
-    private val _locationState = MutableLiveData<UIState<List<LocationsModel>>>()
-    val locationState: LiveData<UIState<List<LocationsModel>>> = _locationState
+    private val _locationState = MutableStateFlow<UIState<List<LocationsUI>>>(UIState.Loading())
+    val locationState: StateFlow<UIState<List<LocationsUI>>> = _locationState
     override var page: Int = 1
 
     init {
@@ -23,8 +24,10 @@ class LocationViewModel @Inject constructor(
     }
 
     override fun fetchRick(page: Int) {
-        subscribeTo(_locationState) {
-            useCase(page)
+        useCase(page).collectRequest(_locationState) { it ->
+            it.map {
+                it.toUI()
+            }
         }
     }
 }
