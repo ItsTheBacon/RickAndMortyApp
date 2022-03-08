@@ -1,35 +1,77 @@
 package com.bacon.data.remote.dtos
 
+import com.bacon.domain.models.CharacterLocationModel
 import com.bacon.domain.models.CharactersModel
+import com.bacon.domain.models.OriginModel
 import com.google.gson.annotations.SerializedName
 
 data class CharactersDto(
     @SerializedName("id")
-    var id: Int? = null,
+    val id: Int,
 
     @SerializedName("name")
-    var name: String? = null,
+    val name: String,
 
     @SerializedName("status")
-    var status: String? = null,
-
-    @SerializedName("image")
-    var image: String? = null,
+    val status: String,
 
     @SerializedName("species")
-    var species: String? = null,
+    val species: String,
+
+    @SerializedName("type")
+    val type: String,
 
     @SerializedName("gender")
-    var gender: String? = null,
+    val gender: String,
+
+    @SerializedName("origin")
+    val origin: OriginDto,
+
+    @SerializedName("location")
+    val location: CharacterLocationDto,
+
+    @SerializedName("image")
+    val image: String,
+
+    @SerializedName("episode")
+    val episode: ArrayList<String>,
+
+    @SerializedName("url")
+    val url: String,
+
+    @SerializedName("created")
+    val created: String,
 )
 
-fun CharactersDto.toCharacter(): CharactersModel {
-    return CharactersModel(
-        id,
-        name,
-        status,
-        image,
-        species,
-        gender
-    )
-}
+data class CharacterLocationDto(
+    @SerializedName("name")
+    val name: String,
+
+    @SerializedName("url")
+    val url: String,
+)
+
+fun OriginDto.toOrigin() = OriginModel(
+    name, url
+)
+
+fun CharacterLocationDto.toDomain() = CharacterLocationModel(
+    name, url
+)
+
+fun CharactersDto.toCharacter() = CharactersModel(
+    id,
+    name,
+    status,
+    species,
+    type,
+    gender,
+    origin.toOrigin(),
+    location.toDomain(),
+    image,
+    episode,
+    url,
+    created
+
+)
+
