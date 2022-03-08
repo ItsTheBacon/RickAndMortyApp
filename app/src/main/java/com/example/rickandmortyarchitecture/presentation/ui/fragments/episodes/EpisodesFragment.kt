@@ -1,16 +1,15 @@
 package com.example.rickandmortyarchitecture.presentation.ui.fragments.episodes
 
 import android.util.Log
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.bacon.domain.models.EpisodesModel
 import com.example.rickandmortyarchitecture.R
 import com.example.rickandmortyarchitecture.base.BaseFragment
 import com.example.rickandmortyarchitecture.databinding.FragmentEpisodesBinding
 import com.example.rickandmortyarchitecture.extensions.ScrollListener
+import com.example.rickandmortyarchitecture.extensions.isVisible
+import com.example.rickandmortyarchitecture.presentation.models.EpisodesUI
 import com.example.rickandmortyarchitecture.presentation.state.UIState
-import com.example.rickandmortyarchitecture.presentation.ui.activity.MainActivity
 import com.example.rickandmortyarchitecture.presentation.ui.adapters.EpisodesAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,13 +31,9 @@ class EpisodesFragment :
         setUpLocations()
     }
 
-    override fun setupListener() {
-        bottomNavigationItemReselectListener()
-    }
-
     private fun setUpLocations() {
-        viewModel.episodesState.observe(viewLifecycleOwner) {
-            binding.progressBarEverything.isVisible = it is UIState.Loading
+        viewModel.episodesState.collectUIState {
+            binding.progressBarEverything.isVisible(it is UIState.Loading)
             when (it) {
                 is UIState.Error -> {
                     Log.e("error", "Location:${it.error} ")
@@ -46,7 +41,7 @@ class EpisodesFragment :
                 is UIState.Loading -> {
                 }
                 is UIState.Success -> {
-                    val epList = ArrayList<EpisodesModel>(adapter.currentList)
+                    val epList = ArrayList<EpisodesUI>(adapter.currentList)
                     epList.addAll(it.data)
                     adapter.submitList(epList)
                 }
@@ -54,9 +49,4 @@ class EpisodesFragment :
         }
     }
 
-    private fun bottomNavigationItemReselectListener() {
-        (requireActivity() as MainActivity).setOnBottomNavigationItemReselectListener {
-            binding.episodesRv.smoothScrollToPosition(0)
-        }
-    }
 }

@@ -4,18 +4,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bacon.domain.models.EpisodesModel
 import com.example.rickandmortyarchitecture.base.BaseDiffUtilCallback
 import com.example.rickandmortyarchitecture.databinding.ItemEpisodesRickBinding
+import com.example.rickandmortyarchitecture.presentation.models.EpisodesUI
 
-class EpisodesAdapter : ListAdapter<EpisodesModel, EpisodesAdapter.ViewHolder>(
+class EpisodesAdapter : ListAdapter<EpisodesUI, EpisodesAdapter.ViewHolder>(
     BaseDiffUtilCallback()
 ) {
     inner class ViewHolder(
         private val binding: ItemEpisodesRickBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun onBind(data: EpisodesModel) {
+        fun onBind(data: EpisodesUI) {
             with(binding) {
                 name.text = data.name
                 description.text = data.created
@@ -25,7 +25,7 @@ class EpisodesAdapter : ListAdapter<EpisodesModel, EpisodesAdapter.ViewHolder>(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.onBind(getItem(position))
+        getItem(position)?.let { holder.onBind(it) }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
