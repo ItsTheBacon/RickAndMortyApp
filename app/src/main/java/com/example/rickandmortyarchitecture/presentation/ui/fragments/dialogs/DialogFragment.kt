@@ -29,8 +29,7 @@ class DialogFragment : DialogFragment() {
 
 
     private fun setupImage() {
-        Glide
-            .with(binding.imageBooksDialog)
+        Glide.with(binding.imageBooksDialog)
             .load(args.image)
             .into(binding.imageBooksDialog)
     }
