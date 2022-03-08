@@ -2,6 +2,7 @@ package com.example.rickandmortyarchitecture.di
 
 import com.bacon.data.remote.RetrofitClient
 import com.bacon.data.remote.apiservices.CharacterApiService
+import com.bacon.data.remote.apiservices.CharacterDetailApiService
 import com.bacon.data.remote.apiservices.EpisodesApiService
 import com.bacon.data.remote.apiservices.LocationApiService
 import dagger.Module
@@ -33,6 +34,12 @@ object NetworkModule {
     @Provides
     fun provideEpisodesApiService(): EpisodesApiService {
         return retrofit.provideEpisodesApiService()
+    }
+
+    @Singleton
+    @Provides
+    fun provideCharacterDetailApiService(): CharacterDetailApiService {
+        return retrofit.provideCharacterDetailApiService()
     }
 }
 
