@@ -1,15 +1,14 @@
 package com.example.rickandmortyarchitecture.presentation.ui.fragments.location
 
 import android.util.Log
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.rickandmortyarchitecture.R
 import com.example.rickandmortyarchitecture.base.BaseFragment
 import com.example.rickandmortyarchitecture.databinding.FragmentLocationBinding
 import com.example.rickandmortyarchitecture.extensions.ScrollListener
+import com.example.rickandmortyarchitecture.extensions.isVisible
 import com.example.rickandmortyarchitecture.presentation.state.UIState
-import com.example.rickandmortyarchitecture.presentation.ui.activity.MainActivity
 import com.example.rickandmortyarchitecture.presentation.ui.adapters.LocationAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,17 +25,13 @@ class LocationFragment :
         binding.locationRv.ScrollListener(viewModel)
     }
 
-    override fun setupListener() {
-        bottomNavigationItemReselectListener()
-    }
-
     override fun setupObserve() {
         setUpLocations()
     }
 
     private fun setUpLocations() {
-        viewModel.locationState.observe(viewLifecycleOwner) {
-            binding.progressBarEverything.isVisible = it is UIState.Loading
+        viewModel.locationState.collectUIState {
+            binding.progressBarEverything.isVisible(it is UIState.Loading)
             when (it) {
                 is UIState.Error -> {
                     Log.e("error", "Location:${it.error} ")
@@ -49,12 +44,6 @@ class LocationFragment :
                     adapter.submitList(list)
                 }
             }
-        }
-    }
-
-    private fun bottomNavigationItemReselectListener() {
-        (requireActivity() as MainActivity).setOnBottomNavigationItemReselectListener {
-            binding.locationRv.smoothScrollToPosition(0)
         }
     }
 }
