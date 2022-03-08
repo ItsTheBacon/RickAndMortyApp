@@ -2,6 +2,7 @@ package com.bacon.data.remote
 
 import com.bacon.common.constants.Constants.BASE_URL
 import com.bacon.data.remote.apiservices.CharacterApiService
+import com.bacon.data.remote.apiservices.CharacterDetailApiService
 import com.bacon.data.remote.apiservices.EpisodesApiService
 import com.bacon.data.remote.apiservices.LocationApiService
 import okhttp3.OkHttpClient
@@ -42,5 +43,9 @@ class RetrofitClient {
 
     fun provideEpisodesApiService(): EpisodesApiService = provideRetrofit.create(
         EpisodesApiService::class.java
+    )
+
+    fun provideCharacterDetailApiService(): CharacterDetailApiService = provideRetrofit.create(
+        CharacterDetailApiService::class.java
     )
 }
