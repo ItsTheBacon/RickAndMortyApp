@@ -1,6 +1,6 @@
 package com.example.rickandmortyarchitecture.presentation.ui.fragments.characters.detail
 
-import com.bacon.domain.usecase.CharacterDetailUseCase
+import com.bacon.domain.usecase.FetchCharacterDetailUseCase
 import com.example.rickandmortyarchitecture.base.BaseViewModel
 import com.example.rickandmortyarchitecture.presentation.models.CharactersUI
 import com.example.rickandmortyarchitecture.presentation.models.toUI
@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CharactersDetailViewModel @Inject constructor(
-    private val useCase: CharacterDetailUseCase,
+    private val useCase: FetchCharacterDetailUseCase,
 ) : BaseViewModel() {
     private val _charactersDetailState = MutableStateFlow<UIState<CharactersUI>>(UIState.Loading())
     val charactersDetailState: StateFlow<UIState<CharactersUI>> = _charactersDetailState
