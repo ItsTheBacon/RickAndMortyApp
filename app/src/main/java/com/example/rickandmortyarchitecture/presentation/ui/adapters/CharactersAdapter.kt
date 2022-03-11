@@ -3,6 +3,7 @@ package com.example.rickandmortyarchitecture.presentation.ui.adapters
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rickandmortyarchitecture.R
@@ -14,7 +15,8 @@ import com.example.rickandmortyarchitecture.presentation.models.CharactersUI
 
 class CharactersAdapter(
     val onItemLongClick: (photo: String) -> Unit,
-    val onItemClickListener: (id: Int) -> Unit,
+    val onItemClickListener: (id: Int, name:String) -> Unit,
+    val fetchFirstSeenIn: (position: Int, episodeUrl: String) -> Unit,
 ) : ListAdapter<CharactersUI, CharactersAdapter.ViewHolder>(
     BaseDiffUtilCallback()
 ) {
@@ -25,7 +27,7 @@ class CharactersAdapter(
         init {
             itemView.setOnClickListener {
                 getItem(absoluteAdapterPosition)?.let {
-                    onItemClickListener(it.id)
+                    onItemClickListener(it.id, it.name)
                 }
             }
         }
@@ -46,11 +48,28 @@ class CharactersAdapter(
                 getItem(absoluteAdapterPosition)?.apply { onItemLongClick(image!!) }
                 false
             }
+            setupFirstSeenIn(data.firstSeenIn, data.episode.first())
+
+        }
+
+        private fun setupFirstSeenIn(firstSeenIn: String, episode: String) = with(binding) {
+            progressBarEpisode.isVisible = firstSeenIn.isEmpty()
+            txtFetchFirstSeenIn.isVisible = firstSeenIn.isNotEmpty()
+            if (firstSeenIn.isEmpty()) {
+                fetchFirstSeenIn(absoluteAdapterPosition, episode)
+            } else {
+                txtFetchFirstSeenIn.text = firstSeenIn
+            }
         }
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         getItem(position)?.let { holder.onBind(it) }
+    }
+
+    fun setFirstSeenIn(position: Int, firstSeenIn: String) {
+        getItem(position)?.firstSeenIn = firstSeenIn
+        notifyItemChanged(position, null)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
