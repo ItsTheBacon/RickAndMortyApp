@@ -19,12 +19,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-abstract class BaseBottomSheet<Binding : ViewBinding, viewModel : BaseViewModel>(
+abstract class BaseBottomSheet<Binding : ViewBinding>(
     @LayoutRes private val layoutId: Int,
 ) : BottomSheetDialogFragment() {
 
     protected abstract val binding: Binding
-    protected abstract val viewModel: viewModel
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         var dialog = super.onCreateDialog(savedInstanceState)
