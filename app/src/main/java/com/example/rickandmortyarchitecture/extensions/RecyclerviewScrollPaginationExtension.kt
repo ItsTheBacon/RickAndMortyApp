@@ -4,7 +4,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.rickandmortyarchitecture.base.BaseFetch
 
 
-fun RecyclerView.ScrollListener(viewModel: BaseFetch) {
+fun RecyclerView.scrollWithPagination(viewModel: BaseFetch) {
     this.addOnScrollListener(object : RecyclerView.OnScrollListener() {
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
             super.onScrollStateChanged(recyclerView, newState)
