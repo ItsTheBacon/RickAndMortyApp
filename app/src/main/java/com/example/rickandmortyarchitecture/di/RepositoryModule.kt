@@ -42,3 +42,4 @@ object RepositoryModule {
         return CharactersDetailRepositoryImpl(characterDetailApiService)
     }
 }
+
