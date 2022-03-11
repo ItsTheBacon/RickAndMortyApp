@@ -2,18 +2,20 @@ package com.example.rickandmortyarchitecture.presentation.ui.fragments.character
 
 import android.util.Log
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.bacon.common.resouce.Resource
 import com.example.rickandmortyarchitecture.R
 import com.example.rickandmortyarchitecture.base.BaseFragment
 import com.example.rickandmortyarchitecture.databinding.FragmentCharacterBinding
-import com.example.rickandmortyarchitecture.extensions.isNetworkAvailable
-import com.example.rickandmortyarchitecture.extensions.isVisibleOrGone
-import com.example.rickandmortyarchitecture.extensions.navigateSafely
-import com.example.rickandmortyarchitecture.extensions.scrollWithPagination
+import com.example.rickandmortyarchitecture.extensions.*
 import com.example.rickandmortyarchitecture.presentation.state.UIState
 import com.example.rickandmortyarchitecture.presentation.ui.adapters.CharactersAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CharacterFragment :
@@ -22,7 +24,8 @@ class CharacterFragment :
     override val viewModel: CharactersViewModel by viewModels()
     private val adapter = CharactersAdapter(
         this::onItemLongClick,
-        this::setOnItemClickListener
+        this::setOnItemClickListener,
+        this::fetchFirstSeenIn
     )
 
 
@@ -57,7 +60,6 @@ class CharacterFragment :
                     }
                 }
             }
-        } else {
         }
     }
 
@@ -69,10 +71,31 @@ class CharacterFragment :
         )
     }
 
-    private fun setOnItemClickListener(id: Int) {
+    private fun setOnItemClickListener(id: Int, name: String) {
         findNavController().navigateSafely(
             CharacterFragmentDirections
-                .actionCharacterFragmentToCharactersDetailFragment(id)
+                .actionCharacterFragmentToCharactersDetailFragment(
+                    id = id,
+                    label = "${getString(R.string.fragment_label_detail_character)} $name",
+                )
         )
+    }
+
+    private fun fetchFirstSeenIn(position: Int, episodeUrl: String) {
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+            viewModel.fetchEpisode(episodeUrl.getIdFromUrl()).collectLatest {
+                when (it) {
+                    is Resource.Loading -> {
+                    }
+                    is Resource.Success -> {
+                        it.data?.let { episode ->
+                            adapter.setFirstSeenIn(position, episode.name.toString())
+                        }
+                    }
+                    is Resource.Error -> {
+                    }
+                }
+            }
+        }
     }
 }
