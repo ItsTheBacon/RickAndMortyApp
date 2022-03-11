@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 data class EpisodesDto(
 
     @SerializedName("id")
-    var id: Int? = null,
+    var id: Int,
     @SerializedName("name")
     var name: String? = null,
     @SerializedName("air_date")
