@@ -55,8 +55,7 @@ class CharactersAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            ItemCharactersRickBinding.inflate
-                (
+            ItemCharactersRickBinding.inflate(
                 LayoutInflater.from(
                     parent.context
                 ),
@@ -66,4 +65,5 @@ class CharactersAdapter(
             )
         )
     }
+
 }
