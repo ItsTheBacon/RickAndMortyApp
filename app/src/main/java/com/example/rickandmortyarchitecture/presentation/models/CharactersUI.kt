@@ -3,9 +3,10 @@ package com.example.rickandmortyarchitecture.presentation.models
 import com.bacon.domain.models.CharacterLocationModel
 import com.bacon.domain.models.CharactersModel
 import com.bacon.domain.models.OriginModel
+import com.example.rickandmortyarchitecture.base.IBaseDiffModel
 
 data class CharactersUI(
-    val id: Int,
+    override val id: Int,
     val name: String,
     val status: String,
     val species: String,
@@ -17,7 +18,7 @@ data class CharactersUI(
     val episode: ArrayList<String>,
     val url: String,
     val created: String,
-)
+) : IBaseDiffModel
 
 data class OriginUI(
     val name: String,
