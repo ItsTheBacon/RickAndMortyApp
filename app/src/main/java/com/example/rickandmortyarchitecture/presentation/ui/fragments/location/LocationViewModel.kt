@@ -1,6 +1,6 @@
 package com.example.rickandmortyarchitecture.presentation.ui.fragments.location
 
-import com.bacon.domain.usecase.LocationUseCase
+import com.bacon.domain.usecase.FetchLocationsUseCase
 import com.example.rickandmortyarchitecture.base.BaseFetch
 import com.example.rickandmortyarchitecture.base.BaseViewModel
 import com.example.rickandmortyarchitecture.presentation.models.LocationsUI
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LocationViewModel @Inject constructor(
-    private val useCase: LocationUseCase,
+    private val useCase: FetchLocationsUseCase,
 ) : BaseViewModel(), BaseFetch {
     private val _locationState = MutableStateFlow<UIState<List<LocationsUI>>>(UIState.Loading())
     val locationState: StateFlow<UIState<List<LocationsUI>>> = _locationState
