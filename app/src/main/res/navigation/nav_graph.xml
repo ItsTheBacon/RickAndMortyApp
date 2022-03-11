@@ -39,11 +39,14 @@
     <fragment
         android:id="@+id/charactersDetailFragment"
         android:name="com.example.rickandmortyarchitecture.presentation.ui.fragments.characters.detail.CharactersDetailFragment"
-        android:label="fragment_characters_detail"
+        android:label="{label}"
         tools:layout="@layout/fragment_characters_detail">
         <argument
             android:name="id"
             android:defaultValue="-1"
             app:argType="integer" />
+        <argument
+            android:name="label"
+            app:argType="string" />
     </fragment>
 </navigation>
