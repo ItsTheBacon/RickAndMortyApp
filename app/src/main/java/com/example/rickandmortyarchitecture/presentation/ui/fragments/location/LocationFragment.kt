@@ -6,8 +6,8 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.rickandmortyarchitecture.R
 import com.example.rickandmortyarchitecture.base.BaseFragment
 import com.example.rickandmortyarchitecture.databinding.FragmentLocationBinding
-import com.example.rickandmortyarchitecture.extensions.ScrollListener
 import com.example.rickandmortyarchitecture.extensions.isVisible
+import com.example.rickandmortyarchitecture.extensions.scrollWithPagination
 import com.example.rickandmortyarchitecture.presentation.state.UIState
 import com.example.rickandmortyarchitecture.presentation.ui.adapters.LocationAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,7 +22,7 @@ class LocationFragment :
 
     override fun initialize() {
         binding.locationRv.adapter = adapter
-        binding.locationRv.ScrollListener(viewModel)
+        binding.locationRv.scrollWithPagination(viewModel)
     }
 
     override fun setupObserve() {
@@ -37,6 +37,7 @@ class LocationFragment :
                     Log.e("error", "Location:${it.error} ")
                 }
                 is UIState.Loading -> {
+
                 }
                 is UIState.Success -> {
                     val list = ArrayList(adapter.currentList)
