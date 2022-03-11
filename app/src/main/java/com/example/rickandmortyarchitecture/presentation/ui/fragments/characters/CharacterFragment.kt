@@ -7,9 +7,10 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.rickandmortyarchitecture.R
 import com.example.rickandmortyarchitecture.base.BaseFragment
 import com.example.rickandmortyarchitecture.databinding.FragmentCharacterBinding
-import com.example.rickandmortyarchitecture.extensions.ScrollListener
+import com.example.rickandmortyarchitecture.extensions.isNetworkAvailable
 import com.example.rickandmortyarchitecture.extensions.isVisibleOrGone
 import com.example.rickandmortyarchitecture.extensions.navigateSafely
+import com.example.rickandmortyarchitecture.extensions.scrollWithPagination
 import com.example.rickandmortyarchitecture.presentation.state.UIState
 import com.example.rickandmortyarchitecture.presentation.ui.adapters.CharactersAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,34 +28,37 @@ class CharacterFragment :
 
     override fun initialize() {
         binding.characterRecycler.adapter = adapter
-        binding.characterRecycler.ScrollListener(viewModel)
+        binding.characterRecycler.scrollWithPagination(viewModel)
     }
 
     override fun setupObserve() {
         setUpCharacters()
+
     }
 
     private fun setUpCharacters() {
-        viewModel.charactersState.collectUIState {
-            when (it) {
-                is UIState.Error -> {
-                    Log.e("error", "Characters:${it.error} ")
-                }
-                is UIState.Loading -> {
-                    binding.shimmerLayout.startShimmer()
-
-                }
-                is UIState.Success -> {
-                    binding.shimmerLayout.stopShimmer()
-                    binding.shimmerLayout.isVisibleOrGone(false)
-                    binding.characterRecycler.isVisibleOrGone(true)
-                    val list = ArrayList(adapter.currentList)
-                    list.addAll(it.data)
-                    adapter.submitList(list)
+        viewModel.fetchRick(1)
+        if (isNetworkAvailable(requireContext())) {
+            viewModel.charactersState.collectUIState {
+                when (it) {
+                    is UIState.Error -> {
+                        Log.e("error", "Characters:${it.error} ")
+                    }
+                    is UIState.Loading -> {
+                        binding.shimmerLayout.startShimmer()
+                    }
+                    is UIState.Success -> {
+                        binding.shimmerLayout.stopShimmer()
+                        binding.shimmerLayout.isVisibleOrGone(false)
+                        binding.characterRecycler.isVisibleOrGone(true)
+                        val list = ArrayList(adapter.currentList)
+                        list.addAll(it.data)
+                        adapter.submitList(list)
+                    }
                 }
             }
+        } else {
         }
-
     }
 
     private fun onItemLongClick(photo: String) {
@@ -71,5 +75,4 @@ class CharacterFragment :
                 .actionCharacterFragmentToCharactersDetailFragment(id)
         )
     }
-
 }
