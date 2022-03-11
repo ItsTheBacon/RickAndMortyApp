@@ -18,6 +18,7 @@ data class CharactersUI(
     val episode: ArrayList<String>,
     val url: String,
     val created: String,
+    var firstSeenIn: String = "",
 ) : IBaseDiffModel
 
 data class OriginUI(
