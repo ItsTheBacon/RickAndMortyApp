@@ -6,9 +6,8 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.rickandmortyarchitecture.R
 import com.example.rickandmortyarchitecture.base.BaseFragment
 import com.example.rickandmortyarchitecture.databinding.FragmentEpisodesBinding
-import com.example.rickandmortyarchitecture.extensions.ScrollListener
 import com.example.rickandmortyarchitecture.extensions.isVisible
-import com.example.rickandmortyarchitecture.presentation.models.EpisodesUI
+import com.example.rickandmortyarchitecture.extensions.scrollWithPagination
 import com.example.rickandmortyarchitecture.presentation.state.UIState
 import com.example.rickandmortyarchitecture.presentation.ui.adapters.EpisodesAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,7 +23,7 @@ class EpisodesFragment :
 
     override fun initialize() {
         binding.episodesRv.adapter = adapter
-        binding.episodesRv.ScrollListener(viewModel)
+        binding.episodesRv.scrollWithPagination(viewModel)
     }
 
     override fun setupObserve() {
@@ -41,12 +40,11 @@ class EpisodesFragment :
                 is UIState.Loading -> {
                 }
                 is UIState.Success -> {
-                    val epList = ArrayList<EpisodesUI>(adapter.currentList)
+                    val epList = ArrayList(adapter.currentList)
                     epList.addAll(it.data)
                     adapter.submitList(epList)
                 }
             }
         }
     }
-
 }
