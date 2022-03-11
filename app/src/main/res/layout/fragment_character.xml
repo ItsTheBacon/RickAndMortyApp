@@ -57,4 +57,5 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/item_characters_rick"
         tools:visibility="visible" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
