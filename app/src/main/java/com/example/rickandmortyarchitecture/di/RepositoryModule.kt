@@ -4,14 +4,8 @@ import com.bacon.data.remote.apiservices.CharacterApiService
 import com.bacon.data.remote.apiservices.CharacterDetailApiService
 import com.bacon.data.remote.apiservices.EpisodesApiService
 import com.bacon.data.remote.apiservices.LocationApiService
-import com.bacon.data.repository.CharacterRepositoryImpl
-import com.bacon.data.repository.CharactersDetailRepositoryImpl
-import com.bacon.data.repository.EpisodesRepositoryImpl
-import com.bacon.data.repository.LocationRepositoryImpl
-import com.bacon.domain.repository.CharacterRepository
-import com.bacon.domain.repository.CharactersDetailRepository
-import com.bacon.domain.repository.EpisodesRepository
-import com.bacon.domain.repository.LocationRepository
+import com.bacon.data.repository.*
+import com.bacon.domain.repository.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -40,6 +34,11 @@ object RepositoryModule {
     @Provides
     fun provideCharactersDetailRepository(characterDetailApiService: CharacterDetailApiService): CharactersDetailRepository {
         return CharactersDetailRepositoryImpl(characterDetailApiService)
+    }
+
+    @Provides
+    fun provideEpisodeDetailRepository(episodesApiService: EpisodesApiService): EpisodesDetailRepository {
+        return EpisodeDetailRepositoryImpl(episodesApiService)
     }
 }
 
