@@ -36,7 +36,7 @@
             android:name="image"
             app:argType="string" />
     </dialog>
-    <dialog
+    <fragment
         android:id="@+id/charactersDetailFragment"
         android:name="com.example.rickandmortyarchitecture.presentation.ui.fragments.characters.detail.CharactersDetailFragment"
         android:label="fragment_characters_detail"
@@ -45,5 +45,5 @@
             android:name="id"
             android:defaultValue="-1"
             app:argType="integer" />
-    </dialog>
+    </fragment>
 </navigation>
