@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class LocationDto(
     @SerializedName("id")
-    var id: Int? = null,
+    var id: Int,
     @SerializedName("name")
     var name: String? = null,
     @SerializedName("type")
@@ -17,6 +17,6 @@ data class LocationDto(
 
     )
 
-fun LocationDto.toLocation(): LocationsModel {
-    return LocationsModel(id, name, type, dimension, created)
-}
+fun LocationDto.toLocation() = LocationsModel(
+    id, name, type, dimension, created
+)
