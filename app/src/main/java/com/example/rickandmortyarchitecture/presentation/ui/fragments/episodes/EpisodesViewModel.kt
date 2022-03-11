@@ -1,6 +1,6 @@
 package com.example.rickandmortyarchitecture.presentation.ui.fragments.episodes
 
-import com.bacon.domain.usecase.EpisodesUseCase
+import com.bacon.domain.usecase.FetchEpisodesUseCase
 import com.example.rickandmortyarchitecture.base.BaseFetch
 import com.example.rickandmortyarchitecture.base.BaseViewModel
 import com.example.rickandmortyarchitecture.presentation.models.EpisodesUI
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EpisodesViewModel @Inject constructor(
-    private val useCase: EpisodesUseCase,
+    private val useCase: FetchEpisodesUseCase,
 ) : BaseViewModel(), BaseFetch {
 
     private val _episodesState = MutableStateFlow<UIState<List<EpisodesUI>>>(UIState.Loading())
