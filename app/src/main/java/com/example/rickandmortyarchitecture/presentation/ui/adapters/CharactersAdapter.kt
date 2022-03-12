@@ -15,7 +15,7 @@ import com.example.rickandmortyarchitecture.presentation.models.CharactersUI
 
 class CharactersAdapter(
     val onItemLongClick: (photo: String) -> Unit,
-    val onItemClickListener: (id: Int, name:String) -> Unit,
+    val onItemClickListener: (id: Int, name: String) -> Unit,
     val fetchFirstSeenIn: (position: Int, episodeUrl: String) -> Unit,
 ) : ListAdapter<CharactersUI, CharactersAdapter.ViewHolder>(
     BaseDiffUtilCallback()
@@ -45,7 +45,7 @@ class CharactersAdapter(
 
             lastKnowLocation.text = data.location.name.capitalized()
             imageItemCharacter.setOnLongClickListener {
-                getItem(absoluteAdapterPosition)?.apply { onItemLongClick(image!!) }
+                getItem(absoluteAdapterPosition)?.apply { onItemLongClick(image) }
                 false
             }
             setupFirstSeenIn(data.firstSeenIn, data.episode.first())
