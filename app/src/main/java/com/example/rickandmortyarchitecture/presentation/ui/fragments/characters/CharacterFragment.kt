@@ -32,8 +32,10 @@ class CharacterFragment :
 
 
     override fun initialize() {
+        binding.characterRecycler.itemAnimator = null
         binding.characterRecycler.adapter = adapter
         binding.characterRecycler.scrollWithPagination(viewModel)
+
     }
 
     override fun setupObserve() {
