@@ -2,7 +2,9 @@ package com.example.rickandmortyarchitecture.presentation.ui.fragments.character
 
 import android.util.Log
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bacon.common.resouce.Resource
@@ -82,19 +84,22 @@ class CharacterFragment :
 
     private fun fetchFirstSeenIn(position: Int, episodeUrl: String) {
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-            viewModel.fetchEpisode(episodeUrl.getIdFromUrl()).collectLatest {
-                when (it) {
-                    is Resource.Loading -> {
-                    }
-                    is Resource.Success -> {
-                        it.data?.let { episode ->
-                            adapter.setFirstSeenIn(position, episode.name.toString())
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.fetchEpisode(episodeUrl.getIdFromUrl()).collectLatest {
+                    when (it) {
+                        is Resource.Loading -> {
                         }
-                    }
-                    is Resource.Error -> {
+                        is Resource.Success -> {
+                            it.data?.let { episode ->
+                                adapter.setFirstSeenIn(position, episode.name.toString())
+                            }
+                        }
+                        is Resource.Error -> {
+                        }
                     }
                 }
             }
+
         }
     }
 }
