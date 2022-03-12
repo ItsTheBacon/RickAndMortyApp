@@ -40,7 +40,6 @@ class CharacterFragment :
     }
 
     private fun setUpCharacters() {
-        viewModel.fetchRick(1)
         if (isNetworkAvailable(requireContext())) {
             viewModel.charactersState.collectUIState {
                 when (it) {
