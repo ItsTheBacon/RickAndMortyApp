@@ -1,6 +1,5 @@
 package com.bacon.data.remote.dtos
 
-import com.bacon.domain.models.RickAndMortyResponse
 import com.google.gson.annotations.SerializedName
 
 data class RickAndMortyResponseDto<T>(
@@ -12,6 +11,3 @@ data class RickAndMortyResponseDto<T>(
 
     )
 
-fun <T> RickAndMortyResponseDto<T>.toResponse() = RickAndMortyResponse(
-    info.toInfo(), results
-)
