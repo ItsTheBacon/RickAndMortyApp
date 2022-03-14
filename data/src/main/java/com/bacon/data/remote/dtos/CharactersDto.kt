@@ -1,13 +1,11 @@
 package com.bacon.data.remote.dtos
 
-import com.bacon.domain.models.CharacterLocationModel
-import com.bacon.domain.models.CharactersModel
-import com.bacon.domain.models.OriginModel
+import com.bacon.common.IBaseDiffModel
 import com.google.gson.annotations.SerializedName
 
 data class CharactersDto(
     @SerializedName("id")
-    val id: Int,
+    override val id: Int,
 
     @SerializedName("name")
     val name: String,
@@ -41,7 +39,9 @@ data class CharactersDto(
 
     @SerializedName("created")
     val created: String,
-)
+
+    var firstSeenIn: String = ""
+) : IBaseDiffModel
 
 data class CharacterLocationDto(
     @SerializedName("name")
@@ -49,29 +49,5 @@ data class CharacterLocationDto(
 
     @SerializedName("url")
     val url: String,
-)
-
-fun OriginDto.toOrigin() = OriginModel(
-    name, url
-)
-
-fun CharacterLocationDto.toDomain() = CharacterLocationModel(
-    name, url
-)
-
-fun CharactersDto.toCharacter() = CharactersModel(
-    id,
-    name,
-    status,
-    species,
-    type,
-    gender,
-    origin.toOrigin(),
-    location.toDomain(),
-    image,
-    episode,
-    url,
-    created
-
 )
 
