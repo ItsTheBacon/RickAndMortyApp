@@ -2,24 +2,24 @@ package com.example.rickandmortyarchitecture.presentation.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bacon.data.remote.dtos.EpisodesDto
 import com.example.rickandmortyarchitecture.base.BaseDiffUtilCallback
 import com.example.rickandmortyarchitecture.databinding.ItemEpisodesRickBinding
-import com.example.rickandmortyarchitecture.presentation.models.EpisodesUI
 
-class EpisodesAdapter : ListAdapter<EpisodesUI, EpisodesAdapter.ViewHolder>(
+class EpisodesAdapter : PagingDataAdapter<EpisodesDto, EpisodesAdapter.ViewHolder>(
     BaseDiffUtilCallback()
 ) {
     inner class ViewHolder(
         private val binding: ItemEpisodesRickBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun onBind(data: EpisodesUI) {
+        fun onBind(episode: EpisodesDto) {
             with(binding) {
-                name.text = data.name
-                description.text = data.created
-
+                textItemEpisodeName.text = episode.name
+                textItemEpisodeAirDate.text = episode.air_date
+                textItemEpisodeCodeOfEpisode.text = episode.episode
             }
         }
     }
