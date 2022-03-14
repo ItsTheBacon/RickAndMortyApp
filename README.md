@@ -1,2 +1,2 @@
 #RickAndMortyArchitecture
-Rick And Morty Api With Clean Architecture
+Clean-Archiecture-Android Example 
