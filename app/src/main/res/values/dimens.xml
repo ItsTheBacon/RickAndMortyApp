@@ -4,4 +4,12 @@
     <dimen name="margin_10dp">10dp</dimen>
     <dimen name="margin_8dp">8dp</dimen>
     <dimen name="text_size18sp">18sp</dimen>
+
+    <!--region ItemCharacter-->
+    <dimen name="textSize_item_character_name">20sp</dimen>
+    <dimen name="textSize_item_character_status_and_species">12sp</dimen>
+    <dimen name="textSize_item_character_subtitle">12sp</dimen>
+    <dimen name="textSize_item_character_description">14sp</dimen>
+    <!--endregion-->
+
 </resources>
