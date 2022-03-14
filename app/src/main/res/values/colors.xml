@@ -16,6 +16,17 @@
     <color name="item_color_focused">#ff9800</color>
     <color name="background_rick_and_morty">#232932</color>
 
+    <color name="Gray55">#8C8C8C</color>
+
+    <color name="VeryDarkGrayishBlue">#2D2F33</color>
+    <color name="VeryDarkMostlyBlackBlue">#1B1E22</color>
+    <color name="VeryVeryDarkMostlyBlackBlue">#191A1E</color>
+    <color name="ModerateGreen">#66C046</color>
+    <color name="StrongRed">#B7342B</color>
+    <color name="CyanBlue">#262B30</color>
+    <color name="ChineseBlack">#0F1214</color>
+    <color name="VividGamboge">#FF9800</color>
+
     <!-- dimensions -->
     <dimen name="image_width">120dp</dimen>
     <dimen name="image_final_width">32dp</dimen>
