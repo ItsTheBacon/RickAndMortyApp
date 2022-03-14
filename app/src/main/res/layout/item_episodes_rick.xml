@@ -1,61 +1,55 @@
-<?xml version="1.0" encoding="utf-8"?><com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/BaseItemMaterialCardView"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/margin_10dp"
-    android:orientation="vertical"
-    app:cardBackgroundColor="#151515"
-    app:cardCornerRadius="20dp">
+    android:layout_height="wrap_content">
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/text_item_episode_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_10dp"
-            tools:text="name"
+            android:layout_marginTop="2dp"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size30sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textSize="30sp"
+            android:textStyle="bold"
+            tools:text="@tools:sample/lorem" />
 
         <TextView
-            android:id="@+id/description"
-            android:layout_width="0dp"
+            style="@style/TextItemEpisodeSubtitle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_8dp"
-            android:ellipsize="end"
-            android:maxLines="3"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size18sp"
-            app:layout_constraintEnd_toEndOf="@id/name"
-            app:layout_constraintStart_toStartOf="@id/name"
-            app:layout_constraintTop_toBottomOf="@id/name"
-            tools:text="@tools:sample/lorem/random"
+            android:text="@string/Air_date_COLON" />
 
-            />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_date_news"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/text_item_episode_air_date"
+            style="@style/TextItemEpisodeDescription"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_8dp"
-            android:layout_marginBottom="@dimen/margin_8dp"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/description"
-            app:layout_constraintTop_toBottomOf="@id/description"
-            tools:text="@tools:sample/date/hhmm" />
+            tools:text="@tools:sample/date/ddmmyy" />
+
+        <TextView
+            style="@style/TextItemEpisodeSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Code_of_episode" />
+
+        <TextView
+            android:id="@+id/text_item_episode_code_of_episode"
+            style="@style/TextItemEpisodeDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            tools:text="S01E01" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 
 </com.google.android.material.card.MaterialCardView>
