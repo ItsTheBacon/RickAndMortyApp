@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.paging.PagingData
 import androidx.viewbinding.ViewBinding
 import com.example.rickandmortyarchitecture.presentation.state.UIState
 import kotlinx.coroutines.flow.StateFlow
@@ -54,6 +55,18 @@ abstract class BaseFragment<V : BaseViewModel, BaseViewBinding : ViewBinding>(
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(lifecycleState) {
                 this@collectUIState.collect {
+                    action(it)
+                }
+            }
+        }
+    }
+    protected fun <T : Any> StateFlow<PagingData<T>>.subscribePaging(
+        state: Lifecycle.State = Lifecycle.State.STARTED,
+        action: (PagingData<T>) -> Unit,
+    ) {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewLifecycleOwner.repeatOnLifecycle(state) {
+                this@subscribePaging.collect {
                     action(it)
                 }
             }
