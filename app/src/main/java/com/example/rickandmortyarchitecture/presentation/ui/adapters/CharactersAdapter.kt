@@ -4,20 +4,19 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.recyclerview.widget.ListAdapter
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bacon.data.remote.dtos.CharactersDto
 import com.example.rickandmortyarchitecture.R
 import com.example.rickandmortyarchitecture.base.BaseDiffUtilCallback
 import com.example.rickandmortyarchitecture.databinding.ItemCharactersRickBinding
-import com.example.rickandmortyarchitecture.extensions.capitalized
 import com.example.rickandmortyarchitecture.extensions.load
-import com.example.rickandmortyarchitecture.presentation.models.CharactersUI
 
 class CharactersAdapter(
     val onItemLongClick: (photo: String) -> Unit,
     val onItemClickListener: (id: Int, name: String) -> Unit,
     val fetchFirstSeenIn: (position: Int, episodeUrl: String) -> Unit,
-) : ListAdapter<CharactersUI, CharactersAdapter.ViewHolder>(
+) : PagingDataAdapter<CharactersDto, CharactersAdapter.ViewHolder>(
     BaseDiffUtilCallback()
 ) {
     inner class ViewHolder(
@@ -33,32 +32,39 @@ class CharactersAdapter(
         }
 
         @SuppressLint("SetTextI18n")
-        fun onBind(data: CharactersUI) = with(binding) {
-            imageItemCharacter.load(data.image)
-            nameCharacter.text = data.name
-            when (data.status) {
-                "Alive" -> icStatusCharacter.setImageResource(R.drawable.character_status_alive)
-                "Dead" -> icStatusCharacter.setImageResource(R.drawable.character_status_dead)
-                "unknown" -> icStatusCharacter.setImageResource(R.drawable.character_status_unknown)
+        fun onBind(character: CharactersDto) = with(binding) {
+            imageItemCharacter.load(character.image)
+            textItemCharacterName.text = character.name
+            when (character.status) {
+                "Alive" -> imageItemCharacterStatus.setImageResource(R.drawable.character_status_alive)
+                "Dead" -> imageItemCharacterStatus.setImageResource(R.drawable.character_status_dead)
+                "unknown" -> imageItemCharacterStatus.setImageResource(R.drawable.character_status_unknown)
             }
-            speciesCharacter.text = "${data.status.capitalized()} - ${data.species}"
-
-            lastKnowLocation.text = data.location.name.capitalized()
+            textItemCharacterStatusAndSpecies.text = textItemCharacterStatusAndSpecies
+                .context
+                .resources
+                .getString(
+                    R.string.hyphen, character.status, character.species
+                )
+            with(textItemCharacterLastKnownLocationData) {
+                text = character.location.name
+                isEnabled = character.location.url.isNotEmpty()
+            }
             imageItemCharacter.setOnLongClickListener {
                 getItem(absoluteAdapterPosition)?.apply { onItemLongClick(image) }
                 false
             }
-            setupFirstSeenIn(data.firstSeenIn, data.episode.first())
+            setupFirstSeenIn(character.firstSeenIn, character.episode.first())
 
         }
 
-        private fun setupFirstSeenIn(firstSeenIn: String, episode: String) = with(binding) {
-            progressBarEpisode.isVisible = firstSeenIn.isEmpty()
-            txtFetchFirstSeenIn.isVisible = firstSeenIn.isNotEmpty()
-            if (firstSeenIn.isEmpty()) {
+        private fun setupFirstSeenIn(firstSeenIn: String? = null, episode: String) = with(binding) {
+            progressBarCharacterFirstSeenIn.isVisible = firstSeenIn == null
+            textItemCharacterFirstSeenInData.isVisible = firstSeenIn != null
+            if (firstSeenIn == null) {
                 fetchFirstSeenIn(absoluteAdapterPosition, episode)
             } else {
-                txtFetchFirstSeenIn.text = firstSeenIn
+                textItemCharacterFirstSeenInData.text = firstSeenIn
             }
         }
     }
@@ -69,7 +75,7 @@ class CharactersAdapter(
 
     fun setFirstSeenIn(position: Int, firstSeenIn: String) {
         getItem(position)?.firstSeenIn = firstSeenIn
-        notifyItemChanged(position, null)
+        notifyItemChanged(position)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
