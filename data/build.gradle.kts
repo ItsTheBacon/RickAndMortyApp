@@ -35,7 +35,6 @@ android {
 
 dependencies {
 
-    implementation(project(":domain"))
 
     // Retrofit 2
     val retrofitVersion = "2.9.0"
@@ -55,6 +54,16 @@ dependencies {
     kapt("androidx.room:room-compiler:$roomVersion")
     // | optional - Kotlin Extensions and Coroutines support for Room
     implementation("androidx.room:room-ktx:$roomVersion")
+
+
+    api(project(":common"))
+
+    // Javax Inject
+    api("javax.inject:javax.inject:1")
+
+    // Kotlin
+    // | Coroutines
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
 
     // Paging 3
     val pagingVersion = "3.1.0"
