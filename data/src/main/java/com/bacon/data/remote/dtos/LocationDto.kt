@@ -1,11 +1,11 @@
 package com.bacon.data.remote.dtos
 
-import com.bacon.domain.models.LocationsModel
+import com.bacon.common.IBaseDiffModel
 import com.google.gson.annotations.SerializedName
 
 data class LocationDto(
     @SerializedName("id")
-    var id: Int,
+    override val id: Int,
     @SerializedName("name")
     var name: String? = null,
     @SerializedName("type")
@@ -15,8 +15,5 @@ data class LocationDto(
     @SerializedName("created")
     var created: String? = null,
 
-    )
+    ):IBaseDiffModel
 
-fun LocationDto.toLocation() = LocationsModel(
-    id, name, type, dimension, created
-)
