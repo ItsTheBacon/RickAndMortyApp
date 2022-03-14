@@ -2,24 +2,24 @@ package com.example.rickandmortyarchitecture.presentation.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bacon.data.remote.dtos.LocationDto
 import com.example.rickandmortyarchitecture.base.BaseDiffUtilCallback
 import com.example.rickandmortyarchitecture.databinding.ItemLocationRickBinding
-import com.example.rickandmortyarchitecture.presentation.models.LocationsUI
 
-class LocationAdapter : ListAdapter<LocationsUI, LocationAdapter.ViewHolder>(
+class LocationAdapter : PagingDataAdapter<LocationDto, LocationAdapter.ViewHolder>(
     BaseDiffUtilCallback()
 ) {
     inner class ViewHolder(
         private val binding: ItemLocationRickBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun onBind(data: LocationsUI) {
+        fun onBind(data: LocationDto) {
             with(binding) {
-                name.text = data.name
-                description.text = data.created
-
+                textItemLocationName.text = data.name
+                textItemLocationType.text = data.type
+                textItemLocationDimension.text = data.dimension
             }
         }
     }
