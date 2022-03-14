@@ -5,4 +5,27 @@
 
     <string name="fragment_label_detail_character">Character:</string>
 
+    <string name="Alive">Alive</string>
+    <string name="Dead">Dead</string>
+    <string name="unknown">unknown</string>
+    <string name="hyphen">%1$s - %2$s</string>
+
+    <!--region | ItemEpisode-->
+    <string name="Air_date_COLON">Air date:</string>
+    <string name="Code_of_episode">Code of episode</string>
+    <!--endregion-->
+
+    <!--region | ItemLocation-->
+    <string name="Location_name_COLON">Location name:</string>
+    <string name="Location_type_COLON">Type:</string>
+    <string name="Dimension_in_which_the_location_is_located_COLON">Dimension in which the location is located:</string>
+    <!--endregion-->
+
+    <!--region Character-->
+
+    <!--region | ItemCharacter-->
+    <string name="Last_known_location_COLON">Last known location:</string>
+    <string name="First_seen_in_COLON">First seen in:</string>
+    <!--endregion-->
+
 </resources>
