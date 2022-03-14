@@ -1,16 +1,18 @@
 package com.example.rickandmortyarchitecture.presentation.ui.fragments.location
 
-import android.util.Log
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.paging.LoadState
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.rickandmortyarchitecture.R
 import com.example.rickandmortyarchitecture.base.BaseFragment
 import com.example.rickandmortyarchitecture.databinding.FragmentLocationBinding
 import com.example.rickandmortyarchitecture.extensions.isVisible
-import com.example.rickandmortyarchitecture.extensions.scrollWithPagination
-import com.example.rickandmortyarchitecture.presentation.state.UIState
 import com.example.rickandmortyarchitecture.presentation.ui.adapters.LocationAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class LocationFragment :
@@ -22,7 +24,12 @@ class LocationFragment :
 
     override fun initialize() {
         binding.locationRv.adapter = adapter
-        binding.locationRv.scrollWithPagination(viewModel)
+        adapter.addLoadStateListener {
+            if (view != null) {
+                binding.locationRv.isVisible(it.refresh is LoadState.NotLoading)
+                binding.progressBarEverything.isVisible(it.refresh is LoadState.Loading)
+            }
+        }
     }
 
     override fun setupObserve() {
@@ -30,19 +37,10 @@ class LocationFragment :
     }
 
     private fun setUpLocations() {
-        viewModel.locationState.collectUIState {
-            binding.progressBarEverything.isVisible(it is UIState.Loading)
-            when (it) {
-                is UIState.Error -> {
-                    Log.e("error", "Location:${it.error} ")
-                }
-                is UIState.Loading -> {
-
-                }
-                is UIState.Success -> {
-                    val list = ArrayList(adapter.currentList)
-                    list.addAll(it.data)
-                    adapter.submitList(list)
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.fetchLocations().collectLatest {
+                    adapter.submitData(it)
                 }
             }
         }
