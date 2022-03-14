@@ -1,12 +1,12 @@
 package com.bacon.data.remote.dtos
 
-import com.bacon.domain.models.EpisodesModel
+import com.bacon.common.IBaseDiffModel
 import com.google.gson.annotations.SerializedName
 
 data class EpisodesDto(
 
     @SerializedName("id")
-    var id: Int,
+    override val id: Int,
     @SerializedName("name")
     var name: String? = null,
     @SerializedName("air_date")
@@ -15,8 +15,5 @@ data class EpisodesDto(
     var episode: String? = null,
     @SerializedName("created")
     var created: String? = null,
-)
+): IBaseDiffModel
 
-fun EpisodesDto.toEpisodes(): EpisodesModel {
-    return EpisodesModel(id, name, air_date, episode, created)
-}
