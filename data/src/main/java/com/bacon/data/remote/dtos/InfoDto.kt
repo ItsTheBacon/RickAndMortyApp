@@ -1,6 +1,5 @@
 package com.bacon.data.remote.dtos
 
-import com.bacon.domain.models.Info
 import com.google.gson.annotations.SerializedName
 
 data class InfoDto(
@@ -14,6 +13,3 @@ data class InfoDto(
     var prev: String? = null,
 )
 
-fun InfoDto.toInfo(): Info {
-    return Info(count, pages, next, prev)
-}
