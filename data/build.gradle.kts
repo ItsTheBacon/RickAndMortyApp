@@ -44,7 +44,7 @@ dependencies {
 
     // OkHttp
     implementation("com.squareup.okhttp3:okhttp-bom:5.0.0-alpha.3")
-    implementation("com.squareup.okhttp3:okhttp")
+    implementation(libs.okhttp.client)
     implementation("com.squareup.okhttp3:logging-interceptor")
 
     // Room

@@ -48,13 +48,13 @@ android {
 dependencies {
     implementation(project(":data"))
     //  Core
-    implementation("androidx.core:core-ktx:1.7.0")
+    implementation(libs.androidx.core.ktx)
 
     // Appcompat
     implementation("androidx.appcompat:appcompat:1.4.1")
 
     //  Material design
-    implementation("com.google.android.material:material:1.5.0")
+    implementation(libs.material)
 
     // UI Component
     implementation("androidx.constraintlayout:constraintlayout:2.1.3")
@@ -64,10 +64,10 @@ dependencies {
 
     // ViewBindingPropertyDelegate
     // | kirich1409 | To use only without reflection variants of viewBinding
-    implementation("com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.3")
+    implementation("com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.6")
     // ViewModel
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.1")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
+    implementation(libs.androidx.lifecycle.livedata)
+    implementation(libs.androidx.lifecycle.viewmodel)
 
     // Navigation component
     implementation("androidx.navigation:navigation-fragment-ktx:2.4.1")
@@ -78,23 +78,23 @@ dependencies {
 
     // Coroutine Lifecycle Scope
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.1")
-    implementation("androidx.fragment:fragment-ktx:1.4.1")
+    implementation(libs.androidx.lifecycle.runtime)
+
+    implementation(libs.androidx.fragment.ktx)
 
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     // OkHttp
-    implementation("com.squareup.okhttp3:okhttp-bom:5.0.0-alpha.3")
+    implementation("com.squareup.okhttp3:okhttp-bom:5.0.0-alpha.6")
     implementation("com.squareup.okhttp3:logging-interceptor")
-    implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.3")
+    implementation(libs.okhttp.client)
     // Glide
     implementation("com.github.bumptech.glide:glide:4.12.0")
 
     // Hilt
-    implementation("com.google.dagger:hilt-android:2.40.5")
-    kapt("com.google.dagger:hilt-android-compiler:2.40")
+    implementation("com.google.dagger:hilt-android:2.41")
+    kapt("com.google.dagger:hilt-android-compiler:2.40.5")
     //Shimmer Layout
     implementation("com.facebook.shimmer:shimmer:0.5.0")
 
