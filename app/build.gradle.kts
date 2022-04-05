@@ -49,26 +49,21 @@ dependencies {
     implementation(project(":data"))
     implementation(project(":domain"))
     //  Core
-    implementation("androidx.core:core-ktx:1.7.0")
+    implementation(libs.androidx.core.ktx)
 
     // Appcompat
-    implementation("androidx.appcompat:appcompat:1.4.1")
+    implementation(libs.androidx.appcompat)
 
     //  Material design
-    implementation("com.google.android.material:material:1.5.0")
+    implementation(libs.material)
 
     // UI Component
     implementation("androidx.constraintlayout:constraintlayout:2.1.3")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
 
     // ViewBinding Property delegate
-
-    // ViewBindingPropertyDelegate
     // | kirich1409 | To use only without reflection variants of viewBinding
-    implementation("com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.3")
-    // ViewModel
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.1")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
+    implementation("com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.6")
 
     // Navigation component
     implementation("androidx.navigation:navigation-fragment-ktx:2.4.1")
@@ -78,10 +73,15 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
 
     // Coroutine Lifecycle Scope
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.1")
-    implementation("androidx.fragment:fragment-ktx:1.4.1")
+    // |Live Data
+    implementation(libs.androidx.lifecycle.livedata)
+    // |ViewModel
+    implementation(libs.androidx.lifecycle.viewmodel)
+    // | RunTime
+    implementation(libs.androidx.lifecycle.runtime)
+
+    //Fragment Ktx
+    implementation(libs.androidx.fragment.ktx)
 
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
