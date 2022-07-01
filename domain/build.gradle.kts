@@ -16,5 +16,5 @@ dependencies {
 
     // Kotlin
     // | Coroutines
-    api("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.2")
 }
