@@ -13,7 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class LocationFragment :
     BaseFragment<LocationViewModel, FragmentLocationBinding>(R.layout.fragment_location) {
-    override val binding: FragmentLocationBinding by viewBinding(FragmentLocationBinding::bind)
+    override val binding by viewBinding(FragmentLocationBinding::bind)
     override val viewModel: LocationViewModel by viewModels()
     private val adapter = LocationAdapter()
 
@@ -28,7 +28,7 @@ class LocationFragment :
     }
 
     private fun setUpLocations() {
-        viewModel.locationState.collectUIStateWithParameters(
+        viewModel.locationsState.collectUIStateWithParameters(
             onError = {
                 Log.e("error", "Location:$it ")
             },
