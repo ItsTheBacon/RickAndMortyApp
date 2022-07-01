@@ -14,7 +14,8 @@ data class CharactersModel(
     val url: String,
     val created: String,
 )
+
 data class CharacterLocationModel(
     val name: String,
-    val url: String
+    val url: String,
 )

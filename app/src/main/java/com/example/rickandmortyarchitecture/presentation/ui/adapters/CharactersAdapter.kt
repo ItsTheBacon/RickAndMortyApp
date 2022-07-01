@@ -1,6 +1,5 @@
 package com.example.rickandmortyarchitecture.presentation.ui.adapters
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -32,7 +31,6 @@ class CharactersAdapter(
             }
         }
 
-        @SuppressLint("SetTextI18n")
         fun onBind(data: CharactersUI) = with(binding) {
             imageItemCharacter.load(data.image)
             nameCharacter.text = data.name

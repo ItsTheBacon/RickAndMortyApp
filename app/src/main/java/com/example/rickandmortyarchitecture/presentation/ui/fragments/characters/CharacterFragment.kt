@@ -2,19 +2,22 @@ package com.example.rickandmortyarchitecture.presentation.ui.fragments.character
 
 import android.util.Log
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.bacon.common.either.Either
 import com.example.rickandmortyarchitecture.R
 import com.example.rickandmortyarchitecture.base.BaseFragment
 import com.example.rickandmortyarchitecture.databinding.FragmentCharacterBinding
 import com.example.rickandmortyarchitecture.extensions.*
 import com.example.rickandmortyarchitecture.presentation.ui.adapters.CharactersAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class CharacterFragment :
     BaseFragment<CharactersViewModel, FragmentCharacterBinding>(R.layout.fragment_character) {
-    override val binding: FragmentCharacterBinding by viewBinding(FragmentCharacterBinding::bind)
+    override val binding by viewBinding(FragmentCharacterBinding::bind)
     override val viewModel: CharactersViewModel by viewModels()
 
     private val adapter = CharactersAdapter(
@@ -34,6 +37,13 @@ class CharacterFragment :
         setUpCharacters()
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (view != null) {
+            binding.shimmerLayout.startShimmer()
+        }
+    }
+
     private fun setUpCharacters() {
         if (isNetworkAvailable(requireContext())) {
             viewModel.charactersState.collectUIStateWithParameters(
@@ -41,16 +51,15 @@ class CharacterFragment :
                     Log.e("anime", "Error Characters $it")
                 },
                 onSuccess = {
-                    binding.shimmerLayout.stopShimmer()
-                    binding.shimmerLayout.isVisibleOrGone(false)
-                    binding.characterRecycler.isVisibleOrGone(true)
+                    if (view != null) {
+                        binding.shimmerLayout.stopShimmer()
+                        binding.shimmerLayout.isVisibleOrGone(false)
+                        binding.characterRecycler.isVisibleOrGone(true)
+                    }
                     val list = ArrayList(adapter.currentList)
                     list.addAll(it)
                     adapter.submitList(list)
                 },
-                onLoading = {
-                    binding.shimmerLayout.startShimmer()
-                }
             )
         }
     }
@@ -74,16 +83,19 @@ class CharacterFragment :
     }
 
     private fun fetchFirstSeenIn(position: Int, episodeUrl: String) {
-        viewModel.fetchEpisode(episodeUrl.getIdFromUrl())
-        viewModel.fetchFirstSeenIn.collectUIStateWithParameters(
-            onError = {
-                Log.e("anime", "Error $it")
-            },
-            onSuccess = {
-                it.let { episode ->
-                    adapter.setFirstSeenIn(position, episode.name.toString())
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.fetchEpisode(episodeUrl.getIdFromUrl()).collectLatest { either ->
+                when (either) {
+                    is Either.Left -> {
+                        Log.e("anime", "Error ${either.value}")
+                    }
+                    is Either.Right -> {
+                        either.value.let {
+                            adapter.setFirstSeenIn(position, it.name.toString())
+                        }
+                    }
                 }
             }
-        )
+        }
     }
 }

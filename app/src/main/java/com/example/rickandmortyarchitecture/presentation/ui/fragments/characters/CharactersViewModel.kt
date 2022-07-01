@@ -5,13 +5,11 @@ import com.bacon.domain.usecase.FetchEpisodesDetailUseCase
 import com.example.rickandmortyarchitecture.base.BaseFetch
 import com.example.rickandmortyarchitecture.base.BaseViewModel
 import com.example.rickandmortyarchitecture.presentation.models.CharactersUI
-import com.example.rickandmortyarchitecture.presentation.models.EpisodesUI
 import com.example.rickandmortyarchitecture.presentation.models.toUI
 import com.example.rickandmortyarchitecture.presentation.state.UIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,8 +20,6 @@ class CharactersViewModel @Inject constructor(
     private val _charactersState = MutableStateFlow<UIState<List<CharactersUI>>>(UIState.Loading())
     val charactersState: StateFlow<UIState<List<CharactersUI>>> = _charactersState
 
-    private val _fetchFirstSeenIn = MutableUIStateFlow<EpisodesUI>()
-    val fetchFirstSeenIn = _fetchFirstSeenIn.asStateFlow()
     override var page: Int = 1
 
     init {
@@ -38,10 +34,8 @@ class CharactersViewModel @Inject constructor(
         }
     }
 
-    fun fetchEpisode(id: Int) {
-        fetchEpisodesDetailUseCase(id).collectRequest(_fetchFirstSeenIn) {
-            it.toUI()
-        }
-    }
+    fun fetchEpisode(id: Int) =
+        fetchEpisodesDetailUseCase(id)
+
 
 }

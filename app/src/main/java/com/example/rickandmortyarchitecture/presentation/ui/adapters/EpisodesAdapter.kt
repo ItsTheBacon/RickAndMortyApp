@@ -19,7 +19,6 @@ class EpisodesAdapter : ListAdapter<EpisodesUI, EpisodesAdapter.ViewHolder>(
             with(binding) {
                 name.text = data.name
                 description.text = data.created
-
             }
         }
     }

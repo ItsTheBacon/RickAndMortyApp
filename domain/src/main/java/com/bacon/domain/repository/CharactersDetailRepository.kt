@@ -5,5 +5,5 @@ import com.bacon.domain.models.CharactersModel
 import kotlinx.coroutines.flow.Flow
 
 interface CharactersDetailRepository {
-     fun fetchCharacterById(id: Int): Flow<Either<String, CharactersModel>>
+    fun fetchCharacterById(id: Int): Flow<Either<String, CharactersModel>>
 }
