@@ -2,17 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <item android:id="@+id/characterFragment"
-        android:title="Characters"
+    <item
+        android:id="@+id/characterFragment"
         android:orderInCategory="1"
-        />
+        android:title="Characters" />
     <item
         android:id="@+id/episodesFragment"
-        android:title="Episodes"
         android:orderInCategory="2"
-        />
-    <item android:id="@+id/locationFragment"
-        android:title="Location"
+        android:title="Episodes" />
+    <item
+        android:id="@+id/locationFragment"
         android:orderInCategory="3"
-        />
+        android:title="Location" />
 </menu>
