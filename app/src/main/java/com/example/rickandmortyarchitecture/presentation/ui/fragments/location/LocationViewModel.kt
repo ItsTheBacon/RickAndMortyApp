@@ -15,8 +15,8 @@ import javax.inject.Inject
 class LocationViewModel @Inject constructor(
     private val useCase: FetchLocationsUseCase,
 ) : BaseViewModel(), BaseFetch {
-    private val _locationState = MutableStateFlow<UIState<List<LocationsUI>>>(UIState.Loading())
-    val locationState: StateFlow<UIState<List<LocationsUI>>> = _locationState
+    private val _locationsState = MutableStateFlow<UIState<List<LocationsUI>>>(UIState.Loading())
+    val locationsState: StateFlow<UIState<List<LocationsUI>>> = _locationsState
     override var page: Int = 1
 
     init {
@@ -24,7 +24,7 @@ class LocationViewModel @Inject constructor(
     }
 
     override fun fetchRick(page: Int) {
-        useCase(page).collectRequest(_locationState) { it ->
+        useCase(page).collectRequest(_locationsState) { it ->
             it.map {
                 it.toUI()
             }
