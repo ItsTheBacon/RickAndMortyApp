@@ -6,9 +6,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.rickandmortyarchitecture.R
 import com.example.rickandmortyarchitecture.base.BaseFragment
 import com.example.rickandmortyarchitecture.databinding.FragmentLocationBinding
-import com.example.rickandmortyarchitecture.extensions.isVisible
 import com.example.rickandmortyarchitecture.extensions.scrollWithPagination
-import com.example.rickandmortyarchitecture.presentation.state.UIState
 import com.example.rickandmortyarchitecture.presentation.ui.adapters.LocationAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,21 +28,18 @@ class LocationFragment :
     }
 
     private fun setUpLocations() {
-        viewModel.locationState.collectUIState {
-            binding.progressBarEverything.isVisible(it is UIState.Loading)
-            when (it) {
-                is UIState.Error -> {
-                    Log.e("error", "Location:${it.error} ")
-                }
-                is UIState.Loading -> {
-
-                }
-                is UIState.Success -> {
-                    val list = ArrayList(adapter.currentList)
-                    list.addAll(it.data)
-                    adapter.submitList(list)
-                }
+        viewModel.locationState.collectUIStateWithParameters(
+            onError = {
+                Log.e("error", "Location:$it ")
+            },
+            onSuccess = {
+                val list = ArrayList(adapter.currentList)
+                list.addAll(it)
+                adapter.submitList(list)
+            },
+            onLoading = {
+                it.setupViewVisibility(binding.locationRv, binding.loaderLocations, false)
             }
-        }
+        )
     }
 }
