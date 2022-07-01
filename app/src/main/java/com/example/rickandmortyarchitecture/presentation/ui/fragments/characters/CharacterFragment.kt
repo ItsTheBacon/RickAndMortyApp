@@ -2,28 +2,21 @@ package com.example.rickandmortyarchitecture.presentation.ui.fragments.character
 
 import android.util.Log
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.bacon.common.resouce.Resource
 import com.example.rickandmortyarchitecture.R
 import com.example.rickandmortyarchitecture.base.BaseFragment
 import com.example.rickandmortyarchitecture.databinding.FragmentCharacterBinding
 import com.example.rickandmortyarchitecture.extensions.*
-import com.example.rickandmortyarchitecture.presentation.state.UIState
 import com.example.rickandmortyarchitecture.presentation.ui.adapters.CharactersAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CharacterFragment :
     BaseFragment<CharactersViewModel, FragmentCharacterBinding>(R.layout.fragment_character) {
     override val binding: FragmentCharacterBinding by viewBinding(FragmentCharacterBinding::bind)
     override val viewModel: CharactersViewModel by viewModels()
+
     private val adapter = CharactersAdapter(
         this::onItemLongClick,
         this::setOnItemClickListener,
@@ -35,34 +28,30 @@ class CharacterFragment :
         binding.characterRecycler.itemAnimator = null
         binding.characterRecycler.adapter = adapter
         binding.characterRecycler.scrollWithPagination(viewModel)
-
     }
 
     override fun setupObserve() {
         setUpCharacters()
-
     }
 
     private fun setUpCharacters() {
         if (isNetworkAvailable(requireContext())) {
-            viewModel.charactersState.collectUIState {
-                when (it) {
-                    is UIState.Error -> {
-                        Log.e("error", "Characters:${it.error} ")
-                    }
-                    is UIState.Loading -> {
-                        binding.shimmerLayout.startShimmer()
-                    }
-                    is UIState.Success -> {
-                        binding.shimmerLayout.stopShimmer()
-                        binding.shimmerLayout.isVisibleOrGone(false)
-                        binding.characterRecycler.isVisibleOrGone(true)
-                        val list = ArrayList(adapter.currentList)
-                        list.addAll(it.data)
-                        adapter.submitList(list)
-                    }
+            viewModel.charactersState.collectUIStateWithParameters(
+                onError = {
+                    Log.e("anime", "Error Characters $it")
+                },
+                onSuccess = {
+                    binding.shimmerLayout.stopShimmer()
+                    binding.shimmerLayout.isVisibleOrGone(false)
+                    binding.characterRecycler.isVisibleOrGone(true)
+                    val list = ArrayList(adapter.currentList)
+                    list.addAll(it)
+                    adapter.submitList(list)
+                },
+                onLoading = {
+                    binding.shimmerLayout.startShimmer()
                 }
-            }
+            )
         }
     }
 
@@ -85,23 +74,16 @@ class CharacterFragment :
     }
 
     private fun fetchFirstSeenIn(position: Int, episodeUrl: String) {
-        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.fetchEpisode(episodeUrl.getIdFromUrl()).collectLatest {
-                    when (it) {
-                        is Resource.Loading -> {
-                        }
-                        is Resource.Success -> {
-                            it.data?.let { episode ->
-                                adapter.setFirstSeenIn(position, episode.name.toString())
-                            }
-                        }
-                        is Resource.Error -> {
-                        }
-                    }
+        viewModel.fetchEpisode(episodeUrl.getIdFromUrl())
+        viewModel.fetchFirstSeenIn.collectUIStateWithParameters(
+            onError = {
+                Log.e("anime", "Error $it")
+            },
+            onSuccess = {
+                it.let { episode ->
+                    adapter.setFirstSeenIn(position, episode.name.toString())
                 }
             }
-
-        }
+        )
     }
 }
