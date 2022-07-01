@@ -19,7 +19,6 @@ class LocationAdapter : ListAdapter<LocationsUI, LocationAdapter.ViewHolder>(
             with(binding) {
                 name.text = data.name
                 description.text = data.created
-
             }
         }
     }
