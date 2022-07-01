@@ -7,8 +7,9 @@ import com.bacon.data.repository.base.BaseRepository
 import com.bacon.domain.repository.LocationRepository
 import javax.inject.Inject
 
-class LocationRepositoryImpl @Inject constructor(private val service: LocationApiService) :
-    BaseRepository(), LocationRepository {
+class LocationRepositoryImpl @Inject constructor(
+    private val service: LocationApiService,
+) : BaseRepository(), LocationRepository {
     override fun fetchLocation(page: Int) = doRequest {
         service.fetchLocations(page).toResponse().results.map {
             it.toLocation()
