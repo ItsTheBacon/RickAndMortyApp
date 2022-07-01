@@ -58,7 +58,7 @@ dependencies {
     implementation(libs.material)
 
     // UI Component
-    implementation("androidx.constraintlayout:constraintlayout:2.1.3")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
 
     // ViewBinding Property delegate
@@ -66,11 +66,11 @@ dependencies {
     implementation("com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.6")
 
     // Navigation component
-    implementation("androidx.navigation:navigation-fragment-ktx:2.4.1")
-    implementation("androidx.navigation:navigation-ui-ktx:2.4.1")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.4.2")
+    implementation("androidx.navigation:navigation-ui-ktx:2.4.2")
     // Coroutine
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
 
     // Coroutine Lifecycle Scope
     // |Live Data
@@ -87,14 +87,14 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     // OkHttp
-    implementation("com.squareup.okhttp3:okhttp-bom:5.0.0-alpha.3")
+    implementation("com.squareup.okhttp3:okhttp-bom:5.0.0-alpha.9")
     implementation("com.squareup.okhttp3:logging-interceptor")
-    implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.3")
+    implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.9")
     // Glide
-    implementation("com.github.bumptech.glide:glide:4.12.0")
+    implementation("com.github.bumptech.glide:glide:4.13.0")
 
     // Hilt
-    implementation("com.google.dagger:hilt-android:2.40.5")
+    implementation("com.google.dagger:hilt-android:2.42")
     kapt("com.google.dagger:hilt-android-compiler:2.40")
     //Shimmer Layout
     implementation("com.facebook.shimmer:shimmer:0.5.0")
