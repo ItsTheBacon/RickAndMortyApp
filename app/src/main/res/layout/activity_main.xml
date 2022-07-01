@@ -25,10 +25,10 @@
                 android:id="@+id/toolbar_main"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/black"
+                android:background="@color/white"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:subtitleTextColor="@color/white" />
+                app:subtitleTextColor="@color/black" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -48,8 +48,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@color/black"
-        app:itemTextColor="@color/white"
+        android:background="@color/white"
+        app:itemTextColor="@color/black"
         app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
         app:layout_constraintLeft_toLeftOf="parent"
         app:menu="@menu/bottom_nav_rick_menu" />
