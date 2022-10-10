@@ -1,2 +1,2 @@
 #RickAndMortyArchitecture
-Clean-Archiecture-Android Example 
+Clean-Architecture-Android Example 
